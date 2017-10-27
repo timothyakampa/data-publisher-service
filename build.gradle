@@ -1,0 +1,42 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://artifacts.elastic.co/maven" }
+}
+
+jar {
+    baseName = 'data-publisher-service'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile("org.springframework.boot:spring-boot-starter-amqp")
+    compile('org.slf4j:slf4j-api:1.7.21')
+    compile('com.typesafe.akka:akka-stream_2.12:2.5.6')
+    compile('org.projectlombok:lombok:1.16.12')
+
+    testCompile('junit:junit:4.12')
+    testCompile('com.typesafe.akka:akka-stream-testkit_2.12:2.5.6')
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
