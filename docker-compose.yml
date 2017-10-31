@@ -1,0 +1,18 @@
+---
+version: '2'
+
+services:
+  oracledb:
+    image: blakeberg/oracledb:1.0
+    container_name: orxe11g
+    hostname: orxe11g
+    ports:
+      - "49132:22"
+      - "49133:1521"
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: 'rabbitmq:management'
+    ports:
+      - "5672:5672"
+      - "15672:15672"

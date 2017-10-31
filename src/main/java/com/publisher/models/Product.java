@@ -1,16 +1,27 @@
 package com.publisher.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
-
-@Entity
+@Getter
+@Setter
+@Entity(name = "PRODUCTS")
 public class Product {
     @Id
-    private String productId;
+    @Column(name = "ID")
+    String productId;
+
     @Column(name = "PRODUCT_NAME")
-    private String name;
+    String name;
+
     @Column(name = "PRODUCT_DESCRIPTION")
-    private String description;
+    String description;
+
+    @Column(name = "CREATED_DATE")
+    Date date;
 }

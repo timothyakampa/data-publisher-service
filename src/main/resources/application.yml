@@ -1,0 +1,21 @@
+spring:
+#  main:
+#    banner-mode: off
+# create and drop tables and sequences, loads import.sql
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+# Oracle settings
+  datasource:
+    url: jdbc:oracle:thin:@localhost:49133:xe
+    username: system
+    password: oracle
+    driver-class-name: oracle.jdbc.OracleDriver
+
+# HikariCP settings
+# spring.datasource.hikari.*
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 5

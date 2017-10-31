@@ -1,0 +1,35 @@
+package com.publisher.streams.flows;
+
+import akka.NotUsed;
+import akka.stream.javadsl.Flow;
+import com.publisher.events.ProductEvent;
+import com.publisher.models.ProductEventStore;
+import com.publisher.repositories.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
+
+@Slf4j
+@Component
+public class MessageTranslationFlow {
+
+    private static final int PARALLELISM = 8;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    public Flow<ProductEventStore, ProductEvent, NotUsed> toEvents() {
+        return Flow.of(ProductEventStore.class)
+                .mapAsync(PARALLELISM, event -> CompletableFuture.supplyAsync(() -> translate(event)));
+    }
+
+    private ProductEvent translate(ProductEventStore event) {
+        return new ProductEvent(
+                event.getEventType(),
+                productRepository.findOne(event.getProductId())
+        );
+    }
+}
+

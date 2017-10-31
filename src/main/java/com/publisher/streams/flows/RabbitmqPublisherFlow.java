@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.publisher.config.RabbitmqConfiguration;
 import com.publisher.events.EventPublishError;
 import com.publisher.events.EventPublished;
-import com.publisher.events.ProductUpdatedEvent;
+import com.publisher.events.ProductEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,19 +20,19 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
-public class RabbitmqFlow {
+public class RabbitmqPublisherFlow {
 
     private static final int PARALLELISM = 8;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public Flow<ProductUpdatedEvent, Either<EventPublishError, EventPublished>, NotUsed> publish() {
-        return Flow.of(ProductUpdatedEvent.class)
+    public Flow<ProductEvent, Either<EventPublishError, EventPublished>, NotUsed> publish() {
+        return Flow.of(ProductEvent.class)
                 .mapAsync(PARALLELISM, event -> CompletableFuture.supplyAsync(() -> publishToRabbit(event)));
     }
 
-    private Either<EventPublishError, EventPublished> publishToRabbit(ProductUpdatedEvent event) {
+    private Either<EventPublishError, EventPublished> publishToRabbit(ProductEvent event) {
         try {
             String eventToPublish = event.asJsonString();
             log.info("Publishing event_type: {} message: {} to rabbit mq", event.getEventType(), eventToPublish);

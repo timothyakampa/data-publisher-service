@@ -1,6 +1,6 @@
 package com.publisher;
 
-import com.publisher.streams.PublishingGraph;
+import com.publisher.streams.ProductDataPublisherGraph;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DataPublisherApplication implements CommandLineRunner {
 
     @Autowired
-    private PublishingGraph publishingGraph;
+    private ProductDataPublisherGraph productDataPublisherGraph;
 
     public static void main(String[] args) {
         SpringApplication.run(DataPublisherApplication.class, args);
@@ -20,7 +20,7 @@ public class DataPublisherApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("\n....................................\n Running rabbitmq publisher");
-        publishingGraph.run();
+        log.info("\n....................................\n Product data publisher graph");
+        productDataPublisherGraph.run();
     }
 }
