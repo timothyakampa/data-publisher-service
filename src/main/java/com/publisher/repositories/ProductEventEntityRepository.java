@@ -1,10 +1,10 @@
 package com.publisher.repositories;
 
-import com.publisher.models.ProductEventStore;
+import com.publisher.models.ProductEventEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ProductEventStoreRepository extends CrudRepository<ProductEventStore, Long> {
+public interface ProductEventEntityRepository extends CrudRepository<ProductEventEntity, Long> {
 }
